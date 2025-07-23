@@ -42,6 +42,9 @@ total_pages = math.ceil(total_results / results_per_page)
 
 st.markdown(f"### Showing {total_results} result(s) for role: **{role}**")
 
+# Page selector
+page = st.number_input("Page", min_value=1, max_value=max(total_pages, 1), step=1)
+
 # Slice results
 start = (page - 1) * results_per_page
 end = start + results_per_page
@@ -82,8 +85,7 @@ for idx, row in filtered_df.iloc[start:end].iterrows():
 
         st.markdown("---")
 
-# Page selector
-page = st.number_input("Page", min_value=1, max_value=max(total_pages, 1), step=1)
+
 
 
 # === Footer ===
