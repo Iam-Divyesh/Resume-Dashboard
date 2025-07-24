@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import math
 import webbrowser
+import urllib.parse
 
 st.set_page_config(page_title="Candidate Search Dashboard", layout="wide")
 
@@ -75,7 +76,9 @@ for idx, row in filtered_df.iloc[start:end].iterrows():
             mobile = str(row.get("Contact", "")).strip().replace(" ", "").replace("+91", "").replace("-", "")
 
             if pd.notna(mobile) and mobile.isdigit() and len(mobile) == 10:
-                whatsapp_url = f"https://web.whatsapp.com/send?phone=91{mobile}"
+                message = f"Hi {row.get('Name','N/A')}" 
+                encoded_message = urllib.parse.quote(message)
+                whatsapp_url = f"https://web.whatsapp.com/send?phone=91{mobile}&text={encoded_message}"
                 whatsapp_button_key = f"whatsapp_btn_{idx}"
                 if st.button("💬 WhatsApp", key=whatsapp_button_key):
                     js = f"window.open('{whatsapp_url}')"
