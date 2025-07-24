@@ -22,6 +22,7 @@ role = st.sidebar.text_input("Role (required)", placeholder="e.g., Data Entry")
 # Optional filters
 name = st.sidebar.text_input("Name (optional)", placeholder="e.g., Tushar")
 location = st.sidebar.text_input("Location (optional)", placeholder="e.g., Surat")
+contact = st.sidebar.text_input("Number (optional)", placeholder="e.g., 1112223334")
 
 # if not role.strip():
 #     st.sidebar.warning("⚠️ Please enter a role to search.")
@@ -35,6 +36,12 @@ if name:
 
 if location:
     filtered_df = filtered_df[filtered_df["City"].str.contains(location, case=False, na=False)]
+
+filtered_df["Contact"] = filtered_df["Contact"].astype(str)
+
+if contact:
+    
+    filtered_df = filtered_df[filtered_df["Contact"].str.fullmatch(contact, case=False, na=False)]
 
 # === Pagination ===
 results_per_page = 10
